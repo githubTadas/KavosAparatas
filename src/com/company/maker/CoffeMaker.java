@@ -1,5 +1,8 @@
 package com.company.maker;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class CoffeMaker {
 
 
@@ -145,6 +148,64 @@ public class CoffeMaker {
         this.showProducts();
     }
 
+    public void saveStatus() {
+        StringBuilder builder = new StringBuilder("");
+
+        builder.append("=========Maker status============\n");
+        builder.append("Usages left:");
+        builder.append(MAX_USES - this.useCount);
+        builder.append("\n");
+        builder.append("is machine ready:");
+//        builder.append(isReady());
+//        builder.append("\n");
+        builder.append("=========Product status=========\n");
+        builder.append("Sugar amount left:");
+        builder.append(sugarAmount);
+        builder.append("\n");
+        builder.append("Water amount left:");
+        builder.append(waterAmount);
+        builder.append("\n");
+        builder.append("Beans amount left:");
+        builder.append(beansAmount);
+        builder.append("\n");
+
+        FileWriter writer = null;
+
+        try {
+            writer = new FileWriter("AparatoBusena.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.write(String.valueOf(builder));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean asPasiruoses() {
+
+        boolean result = true;
+        if (useCount >= MAX_USES) {
+            result = false;
+        }
+        if (waterAmount <= 0) {
+            result = false;
+        }
+        if (sugarAmount <= 0) {
+            result = false;
+        }
+        if (beansAmount <= 0) {
+            result = false;
+        }
+
+        return result;
+    }
 
     public float getWater() {
         return this.waterAmount;
